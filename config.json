@@ -1,0 +1,147 @@
+{
+  "_comment": "Steeple & Stitch POD -> in-house (TWC) clone config. Location/collection/publication GIDs read live from the store on 2026-09-08.",
+  "api_version": "2025-07",
+  "twc_suffix": " TWC",
+  "pod_locations": {
+    "gid://shopify/Location/117116567920": "Ninja POD",
+    "gid://shopify/Location/117116436848": "Printify",
+    "gid://shopify/Location/117563883888": "Printful",
+    "gid://shopify/Location/117500412272": "gelato",
+    "gid://shopify/Location/118174679408": "POD Fulfillment - Dropship Only (inactive)"
+  },
+  "house_location": "gid://shopify/Location/117107065200",
+  "location_names": {
+    "gid://shopify/Location/117107065200": "Shop Pickup - Dayton",
+    "gid://shopify/Location/118174646640": "Germantown Christian School",
+    "gid://shopify/Location/118174941552": "Revive Church",
+    "gid://shopify/Location/118174679408": "POD Fulfillment - Dropship Only",
+    "gid://shopify/Location/117116567920": "Ninja POD",
+    "gid://shopify/Location/117116436848": "Printify",
+    "gid://shopify/Location/117563883888": "Printful",
+    "gid://shopify/Location/117500412272": "gelato"
+  },
+  "_pickup_policy": "Local pickup is offered ONLY in the Dayton, OH area. Larry's decision, 2026-09-08, after the pipeline started producing leads in California, Missouri and Florida. Every other partner ships. A new out-of-state org gets pickup_locations: [] -- which is already the case for fhcog, hoh, community-christian, men-of-faith and alt-west. Do NOT enable local pickup on the house location: it is named 'Shop Pickup - Dayton' but it is the ship-from location, and turning pickup on there would offer Dayton pickup to every customer on the store, out-of-state included.",
+  "pod_vendors": [
+    "Steeple & Stitch Co."
+  ],
+  "pod_media_markers": [
+    "ninjapod_media_",
+    "printify",
+    "printful",
+    "gelato"
+  ],
+  "pod_media_alt_prefixes": [
+    "ndm:"
+  ],
+  "pod_media_filename_patterns": [
+    "^\\d{15,}_\\d+\\.(jpg|jpeg|png)$"
+  ],
+  "_app_metafields": "App-owned namespaces stripped from the in-house clone. Printify writes printify_custom.printify_product_id \u2014 leaving it on a duplicate makes the clone look like a Printify product to any reconciliation that keys on it.",
+  "app_metafield_namespaces": [
+    "printify_custom",
+    "printify",
+    "printful",
+    "gelato",
+    "ninjapod",
+    "ninja_pod",
+    "ninja-pod"
+  ],
+  "drop_single_value_options": [
+    "Product",
+    "Style",
+    "Brand",
+    "Model",
+    "Type",
+    "Garment"
+  ],
+  "publications": [
+    "gid://shopify/Publication/330568073584",
+    "gid://shopify/Publication/330568139120",
+    "gid://shopify/Publication/330568106352",
+    "gid://shopify/Publication/335638757744",
+    "gid://shopify/Publication/330568204656"
+  ],
+  "orgs": {
+    "gcs": {
+      "vendor": "Germantown Christian School",
+      "tag": "GCS",
+      "collection_id": "gid://shopify/Collection/663709254000",
+      "collection_handle": "gcs-cardinals",
+      "store_name": "Germantown Christian School",
+      "pickup_locations": [
+        "gid://shopify/Location/118174646640"
+      ]
+    },
+    "gcs-athletics": {
+      "vendor": "GCS Athletics",
+      "tag": "GCS Athletics",
+      "collection_id": "gid://shopify/Collection/665060966768",
+      "collection_handle": "gcs-athletics",
+      "store_name": "GCS Athletics",
+      "pickup_locations": [
+        "gid://shopify/Location/118174646640"
+      ]
+    },
+    "revive": {
+      "vendor": "Revive Church",
+      "tag": "revive-church",
+      "collection_id": "gid://shopify/Collection/663058809200",
+      "collection_handle": "revive-church",
+      "store_name": "Revive Church",
+      "pickup_locations": [
+        "gid://shopify/Location/118174941552"
+      ]
+    },
+    "fhcog": {
+      "vendor": "Free Holiness Church of God",
+      "tag": "fhcog",
+      "collection_id": "gid://shopify/Collection/663411097968",
+      "collection_handle": "free-holiness-church-of-god",
+      "store_name": "Free Holiness Church of God",
+      "pickup_locations": []
+    },
+    "hoh": {
+      "vendor": "Highway of Holiness",
+      "tag": "highway-of-holiness",
+      "collection_id": "gid://shopify/Collection/663848976752",
+      "collection_handle": "highway-of-holiness",
+      "store_name": "Highway of Holiness",
+      "pickup_locations": []
+    },
+    "community-christian": {
+      "vendor": "Community Christian",
+      "tag": "community-christian",
+      "collection_id": "gid://shopify/Collection/663849042288",
+      "collection_handle": "community-christian-apparel",
+      "store_name": "Community Christian",
+      "pickup_locations": []
+    },
+    "men-of-faith": {
+      "vendor": "The Men of Faith",
+      "tag": "the-men-of-faith",
+      "collection_id": "gid://shopify/Collection/664430051696",
+      "collection_handle": "the-men-of-faith",
+      "store_name": "The Men of Faith",
+      "pickup_locations": []
+    },
+    "alt-west": {
+      "vendor": "ALT-WEST",
+      "tag": "alt-west",
+      "collection_id": "gid://shopify/Collection/664460788080",
+      "collection_handle": "alt-west",
+      "store_name": "ALT-WEST",
+      "pickup_locations": []
+    },
+    "steeple-stitch": {
+      "vendor": "Steeple & Stitch Co.",
+      "tag": "steeple-stitch",
+      "collection_id": "gid://shopify/Collection/663356178800",
+      "collection_handle": "steeple-stitch",
+      "store_name": "Steeple & Stitch Co.",
+      "pickup_locations": [
+        "gid://shopify/Location/117107065200"
+      ]
+    }
+  },
+  "store_url_base": "https://www.steepleandstitch.com/collections/"
+}
