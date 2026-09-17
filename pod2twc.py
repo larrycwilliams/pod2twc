@@ -364,8 +364,12 @@ def print_plan(src, plan, cfg):
 
     note("info", f"metafields → custom.church_store / _name / _url, "
                  f"custom.pod_basis_cost, custom.pod_source_product")
-    note("info", f"publish to {len(cfg['publications'])} channel(s), then "
-                 f"{C_GRN}clone ACTIVE{C_RESET} / {C_YEL}source DRAFT{C_RESET}")
+    if args.no_flip:
+        note("info", f"publish to {len(cfg['publications'])} channel(s), then "
+                     f"{C_YEL}leave the clone DRAFT{C_RESET} (--no-flip)")
+    else:
+        note("info", f"publish to {len(cfg['publications'])} channel(s), then "
+                     f"{C_GRN}clone ACTIVE{C_RESET} / {C_YEL}source DRAFT{C_RESET}")
     print()
 
 
@@ -445,8 +449,6 @@ def do_clone(shop, cfg, args):
         key = tuple(sorted((s["name"], s["value"]) for s in v["selectedOptions"]))
         smatch = src_by_key.get(key)
         inv = {"tracked": False, "requiresShipping": True}
-        if plan["clear_skus"]:
-            inv["sku"] = ""
         if plan["house_cost"]:
             inv["cost"] = plan["house_cost"]
         w = (smatch or v)["inventoryItem"]["measurement"]["weight"]
@@ -463,7 +465,7 @@ def do_clone(shop, cfg, args):
             productVariantsBulkUpdate(productId: $p, variants: $v) {
               userErrors { field message } } }""",
             {"p": new_id, "v": chunk}, True)
-    note("ok", f"{len(updates)} variant(s): tracking off, SKUs cleared, cost + weight set")
+    note("ok", f"{len(updates)} variant(s): tracking off, cost + weight set")
 
     # 6. inventory locations — detach POD, attach house + org pickup
     clone = fetch_product(shop, new_id)
@@ -486,6 +488,22 @@ def do_clone(shop, cfg, args):
                     {"i": item["id"], "l": lid}, True)
                 attached += 1
     note("ok", f"inventory: {detached} POD/foreign level(s) detached, {attached} attached")
+
+    # 6b. SKUs, and only now. Shopify refuses to blank the SKU of a variant that
+    #     is still stocked at a fulfilment-service location -- "SKU can't be
+    #     blank" on every variant. Doing it in step 5 aborted the clone halfway
+    #     on 2026-09-17, leaving a half-built duplicate in the store.
+    if plan["clear_skus"]:
+        sku_updates = [{"id": v["id"], "inventoryItem": {"sku": ""}}
+                       for v in clone["variants"]]
+        for chunk in (sku_updates[i:i + 50]
+                      for i in range(0, len(sku_updates), 50)):
+            shop.mutate("productVariantsBulkUpdate", """
+              mutation($p: ID!, $v: [ProductVariantsBulkInput!]!) {
+                productVariantsBulkUpdate(productId: $p, variants: $v) {
+                  userErrors { field message } } }""",
+                {"p": new_id, "v": chunk}, True)
+        note("ok", f"{len(sku_updates)} POD SKU(s) cleared")
 
     # 7. metafields — attribution + the pairing/cost data the workbook needs
     mfs = [
